@@ -1,5 +1,5 @@
 require "rbshop/version"
 
-module Rbshop
+module RBShop
   # Your code goes here...
 end

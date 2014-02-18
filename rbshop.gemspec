@@ -5,7 +5,7 @@ require 'rbshop/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "rbshop"
-  spec.version       = Rbshop::VERSION
+  spec.version       = RBShop::VERSION
   spec.authors       = ["Ben Turner"]
   spec.email         = ["ben.turner@pobox.com"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
