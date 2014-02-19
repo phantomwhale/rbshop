@@ -13,3 +13,16 @@ require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new("spec")
 
 task :default => [:clean, :compile, :spec]
+
+# Console
+task :console do
+  require 'irb'
+  require 'irb/completion'
+  require 'rbshop'
+
+  include RBShop
+  ARGV.clear
+
+  # img = Image.load('spec/fixtures/cthulhu.jpg')
+  IRB.start
+end
