@@ -19,3 +19,5 @@ VALUE rbshop_img_charcoal(
 
 // RBShop::Image#save
 VALUE rbshop_img_save(VALUE self, VALUE destination);
+
+VALUE rbshop_img_get_dimensions(VALUE self);

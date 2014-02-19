@@ -71,6 +71,13 @@ rbshop_define_image_class()
       rbshop_img_save,
       1
   );
+
+  rb_define_method(
+      RBShopImageClass,
+      "dimensions",
+      rbshop_img_get_dimensions,
+      0
+  );
 }
 
 // RBShop::Image.load(path)
@@ -159,4 +166,29 @@ rbshop_img_save(VALUE self, VALUE r_destination)
 
   MagickWriteImage(wand, destination);
   return self;
+}
+
+VALUE
+rbshop_img_get_dimensions(VALUE self)
+{
+
+  MagickWand *wand = rbshop_img_get(self);
+
+  unsigned long width = MagickGetImageWidth(wand);
+  unsigned long height = MagickGetImageHeight(wand);
+
+
+  VALUE hash = rb_hash_new();
+  rb_hash_aset(
+      hash,
+      ID2SYM(rb_intern("width")),
+      INT2NUM(width)
+  );
+  rb_hash_aset(
+      hash,
+      ID2SYM(rb_intern("height")),
+      INT2NUM(height)
+  );
+
+  return hash;
 }

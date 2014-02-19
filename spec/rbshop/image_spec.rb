@@ -32,6 +32,13 @@ describe RBShop::Image do
         expect( img.height ).to eq(612)
       end
     end
+
+
+    describe '#dimensions' do
+      it 'has the correct values' do
+        expect( img.dimensions ).to include(:width => 792, :height => 612)
+      end
+    end
   end
 
   context 'filters' do
