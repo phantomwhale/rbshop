@@ -21,8 +21,20 @@ task :console do
   require 'rbshop'
 
   include RBShop
-  ARGV.clear
 
-  # img = Image.load('spec/fixtures/cthulhu.jpg')
+  def img 
+    @img ||= Image.load('spec/fixtures/cthulhu.jpg')
+  end
+
+  def preview 
+    img.save('/tmp/imagetmp.jpg')
+    `gnome-open /tmp/imagetmp.jpg`
+  end
+
+  def reload!
+    @img = nil
+  end
+
+  ARGV.clear
   IRB.start
 end
