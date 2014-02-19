@@ -14,6 +14,12 @@ rbshop_img_get(VALUE obj)
   return wand;
 }
 
+void
+rbshop_img_free(MagickWand *wand)
+{
+  DestroyMagickWand(wand);
+}
+
 VALUE RBShopImageClass = Qnil;
 extern VALUE RBShopModule;
 
@@ -81,7 +87,7 @@ rbshop_img_load(VALUE klass, VALUE r_path)
   VALUE self = Data_Wrap_Struct(
       RBShopImageClass, // RUby Class type
       0,                // Mark function (not needed)
-      0,                // TODO: ruby free
+      rbshop_img_free,  // Free up the memory
       wand              // What Ruby is wrapping
   );
 
