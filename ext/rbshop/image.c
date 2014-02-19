@@ -1,5 +1,7 @@
 #include "image.h"
 
+#define VARIABLE_PARAMETERS -1
+
 VALUE RBShopImageClass = Qnil;
 extern VALUE RBShopModule;
 
@@ -34,6 +36,13 @@ rbshop_define_image_class()
       "height",
       rbshop_img_get_height,
       0
+  );
+
+  rb_define_method(
+      RBShopImageClass,
+      "charcol",
+      rbshop_img_charcoal,
+      VARIABLE_PARAMETERS
   );
 }
 
@@ -86,4 +95,49 @@ rbshop_img_get_height(VALUE self)
 
   unsigned long height = MagickGetImageHeight(wand);
   return INT2NUM(height);
+}
+
+// RBShop::Image#charcoal
+VALUE
+rbshop_img_charcoal(
+    int argc, VALUE *argv, VALUE self)
+{
+  MagickWand *wand;
+  Data_Get_Struct(
+      self,             // Ruby Object
+      MagickWand,       // What is the C type?
+      wand              // Where do I set it?
+  );
+
+  VALUE r_radius;
+  VALUE r_sigma;
+  rb_scan_args(
+      argc,             // The count
+      argv,             // The values
+      "02",             // 0 required args, 2 optional args
+      &r_radius,        // The variables where the arguments
+      &r_sigma          // go into
+  );
+
+  double radius = 0;
+  double sigma = 0;
+
+  if( RTEST(r_radius) )
+  {
+    Check_Type(r_radius, T_FLOAT);
+    radius = NUM2DBL(r_radius);
+  } else {
+    radius = 1; 
+  }
+
+  if( RTEST(r_sigma) )
+  {
+    Check_Type(r_sigma, T_FLOAT);
+    sigma = NUM2DBL(r_sigma);
+  } else {
+    sigma = radius / 2; 
+  }
+   
+  MagickCharcoalImage(wand, radius, sigma);
+  return self;
 }
