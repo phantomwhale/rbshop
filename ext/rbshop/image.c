@@ -38,10 +38,10 @@ rbshop_define_image_class()
       0
   );
 
-  // RBShop::Image#charcol(radius=1)
+  // RBShop::Image#charcoal(radius=1)
   rb_define_method(
       RBShopImageClass,
-      "charcol",
+      "charcoal",
       rbshop_img_charcoal,
       VARIABLE_PARAMETERS
   );

@@ -35,17 +35,17 @@ describe RBShop::Image do
   end
 
   context 'filters' do
-    describe '#charcol' do
+    describe '#charcoal' do
       it 'works with no arguments' do
-        expect( img.charcol ).to be_a(described_class)
+        expect( img.charcoal ).to be_a(described_class)
       end
 
       it 'works with one argument' do
-        expect( img.charcol 1.0 ).to be_a(described_class)
+        expect( img.charcoal 1.0 ).to be_a(described_class)
       end
 
       it 'requries a float' do
-        expect { img.charcol "10" }.to raise_error
+        expect { img.charcoal "10" }.to raise_error
       end
     end
   end

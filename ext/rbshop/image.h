@@ -13,7 +13,7 @@ VALUE rbshop_img_get_width(VALUE self);
 // RBShop::Image#height
 VALUE rbshop_img_get_height(VALUE self);
 
-// RBShop::Image#charcol(radius = 0)
+// RBShop::Image#charcoal(radius = 0)
 VALUE rbshop_img_charcoal(
     int argc, VALUE *argv, VALUE self);
 
