@@ -2,6 +2,18 @@
 
 #define VARIABLE_PARAMETERS -1
 
+MagickWand *
+rbshop_img_get(VALUE obj)
+{
+  MagickWand *wand;
+  Data_Get_Struct(
+      obj,              // Ruby Object
+      MagickWand,       // What is the C type?
+      wand              // Where do I set it?
+  );
+  return wand;
+}
+
 VALUE RBShopImageClass = Qnil;
 extern VALUE RBShopModule;
 
@@ -80,13 +92,7 @@ rbshop_img_load(VALUE klass, VALUE r_path)
 VALUE
 rbshop_img_get_width(VALUE self)
 {
-  MagickWand *wand;
-  Data_Get_Struct(
-      self,             // Ruby Object
-      MagickWand,       // What is the C type?
-      wand              // Where do I set it?
-  );
-
+  MagickWand *wand = rbshop_img_get(self);
   unsigned long width = MagickGetImageWidth(wand);
   return INT2NUM(width);
 }
@@ -95,13 +101,7 @@ rbshop_img_get_width(VALUE self)
 VALUE
 rbshop_img_get_height(VALUE self)
 {
-  MagickWand *wand;
-  Data_Get_Struct(
-      self,             // Ruby Object
-      MagickWand,       // What is the C type?
-      wand              // Where do I set it?
-  );
-
+  MagickWand *wand = rbshop_img_get(self);
   unsigned long height = MagickGetImageHeight(wand);
   return INT2NUM(height);
 }
@@ -111,13 +111,7 @@ VALUE
 rbshop_img_charcoal(
     int argc, VALUE *argv, VALUE self)
 {
-  MagickWand *wand;
-  Data_Get_Struct(
-      self,             // Ruby Object
-      MagickWand,       // What is the C type?
-      wand              // Where do I set it?
-  );
-
+  MagickWand *wand = rbshop_img_get(self);
   VALUE r_radius;
   VALUE r_sigma;
   rb_scan_args(
@@ -154,13 +148,7 @@ rbshop_img_charcoal(
 VALUE 
 rbshop_img_save(VALUE self, VALUE r_destination)
 {
-  MagickWand *wand;
-  Data_Get_Struct(
-      self,             // Ruby Object
-      MagickWand,       // What is the C type?
-      wand              // Where do I set it?
-  );
-
+  MagickWand *wand = rbshop_img_get(self);
   char *destination = StringValueCStr(r_destination); 
 
   MagickWriteImage(wand, destination);
