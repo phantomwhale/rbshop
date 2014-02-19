@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'tmpdir'
 
 describe RBShop::Image do
   let(:img) { described_class.load fixture_path('cthulhu.jpg')}
@@ -45,6 +46,18 @@ describe RBShop::Image do
 
       it 'requries a float' do
         expect { img.charcol "10" }.to raise_error
+      end
+    end
+  end
+
+  context 'persistance' do
+    describe '#save' do
+      it 'saves an image to the destination' do
+        Dir.mktmpdir do |dir|
+          destination = File.join(dir, "new-file.jpg")
+          img.save(destination)
+          expect( File.exists?(destination)).to be_true
+        end
       end
     end
   end

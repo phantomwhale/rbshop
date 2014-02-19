@@ -38,11 +38,20 @@ rbshop_define_image_class()
       0
   );
 
+  // RBShop::Image#charcol(radius=1)
   rb_define_method(
       RBShopImageClass,
       "charcol",
       rbshop_img_charcoal,
       VARIABLE_PARAMETERS
+  );
+
+  // RBShop::Image#save(destination)
+  rb_define_method(
+      RBShopImageClass,
+      "save",
+      rbshop_img_save,
+      1
   );
 }
 
@@ -139,5 +148,21 @@ rbshop_img_charcoal(
   }
    
   MagickCharcoalImage(wand, radius, sigma);
+  return self;
+}
+
+VALUE 
+rbshop_img_save(VALUE self, VALUE r_destination)
+{
+  MagickWand *wand;
+  Data_Get_Struct(
+      self,             // Ruby Object
+      MagickWand,       // What is the C type?
+      wand              // Where do I set it?
+  );
+
+  char *destination = StringValueCStr(r_destination); 
+
+  MagickWriteImage(wand, destination);
   return self;
 }
